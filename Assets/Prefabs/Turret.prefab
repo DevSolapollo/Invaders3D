@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7497013011651611150
+--- !u!1001 &6538645735298422523
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 227d9c45da34c8249bdfe45c36fe7355, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 227d9c45da34c8249bdfe45c36fe7355, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 227d9c45da34c8249bdfe45c36fe7355, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 227d9c45da34c8249bdfe45c36fe7355, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 227d9c45da34c8249bdfe45c36fe7355, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -48,6 +48,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7065868520099150156, guid: 227d9c45da34c8249bdfe45c36fe7355, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0946c8579cfa34c45b535198c2d44a28, type: 2}
+    - target: {fileID: -4795160085687874365, guid: 227d9c45da34c8249bdfe45c36fe7355, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 08d831aed0c74844383917a2a6629268, type: 2}
     - target: {fileID: 919132149155446097, guid: 227d9c45da34c8249bdfe45c36fe7355, type: 3}
       propertyPath: m_Name
       value: Turret
