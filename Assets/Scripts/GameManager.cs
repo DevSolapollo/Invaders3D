@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
 {
 
 
+    [SerializeField] private AudioClip _gameMusic;
+
+
     public static GameManager Instance { get; private set; }
 
 
@@ -42,6 +45,8 @@ public class GameManager : MonoBehaviour
         GameEvents.OnGameOver += GameEvents_GameOver;
         GameInput.Instance.OnShoot += GameInput_OnShoot;
         Invaders.Instance.OnInvaderWipe += Invaders_OnInvaderWipe;
+
+        AudioManager.Instance.StopMusic();
     }
 
     private void OnDestroy() {
@@ -68,6 +73,7 @@ public class GameManager : MonoBehaviour
     private void GameInput_OnShoot(object sender, EventArgs e) {
         if (_state == State.Waiting) {
             _state = State.Countdown;
+            AudioManager.Instance.PlayMusic(_gameMusic);
             OnStateChanged?.Invoke(this, EventArgs.Empty);
         }
     }

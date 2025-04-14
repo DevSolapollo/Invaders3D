@@ -37,6 +37,7 @@ public class LevelOverUI : MonoBehaviour
     private void GameManager_OnStateChanged(object sender, System.EventArgs e) {
         if (GameManager.Instance.IsVictory() || GameManager.Instance.IsGameOver()) {
             _scoreText.text = ScoreManager.Instance.GetScore().ToString();
+            AudioManager.Instance.StopMusic();
 
             if (GameManager.Instance.IsGameOver()) {
                 _levelOverText.text = "GAME OVER";

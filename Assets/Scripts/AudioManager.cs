@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
 
 
     [SerializeField] private AudioSource _sfxSource;
+    [SerializeField] private AudioSource _bgmSource;
 
 
     private void Awake() {
@@ -25,6 +26,19 @@ public class AudioManager : MonoBehaviour
             _sfxSource.pitch = 1f + Random.Range(-pitchVariance, pitchVariance);
             _sfxSource.PlayOneShot(clip, volume);
         }
+    }
+
+    public void PlayMusic(AudioClip clip, float volume = 1f, bool loop = true) {
+        if (clip != null) {
+            _bgmSource.clip = clip;
+            _bgmSource.volume = volume;
+            _bgmSource.loop = loop;
+            _bgmSource.Play();
+        }
+    }
+
+    public void StopMusic() {
+        _bgmSource.Stop();
     }
 
 }
