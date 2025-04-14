@@ -746,6 +746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startButton: {fileID: 1780097975}
   _exitButton: {fileID: 2038427151}
+  _buttonSound: {fileID: 8300000, guid: 8cfff6e1a74a3cf4aa9d5899ab0ecc50, type: 3}
 --- !u!1 &996843409
 GameObject:
   m_ObjectHideFlags: 0
