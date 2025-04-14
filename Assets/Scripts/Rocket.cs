@@ -16,7 +16,7 @@ public class Rocket : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.TryGetComponent<Invader>(out Invader invader)) {
-            invader.Die();
+            invader.TakeDamage();
             Destroy(gameObject);
         }
     }

@@ -1,11 +1,13 @@
 using System;
+using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class Invaders : MonoBehaviour
 {
 
 
-    [SerializeField] private GameObject[] _aliens;
+    [SerializeField] private GameObject[] _invaders;
     [SerializeField] private int _columns = 10;
     [SerializeField] private float _spacingX = 10f;     
     [SerializeField] private float _spacingY = 4f;
@@ -16,7 +18,19 @@ public class Invaders : MonoBehaviour
 
 
     private Vector3 _direction = Vector3.right;
+    private bool _anyAlive;
+    private bool _invadersSpawned = false;
 
+
+    public static Invaders Instance { get; private set; }
+
+
+    public event EventHandler OnInvaderWipe; 
+
+
+    private void Awake() {
+        Instance = this;
+    }
 
     private void Start() {
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
@@ -29,29 +43,57 @@ public class Invaders : MonoBehaviour
     }
 
     private void Update() {
-        MoveInvaders();
-    }
-
-    private void SpawnInvaders() {
-        for (int row = 0; row < _aliens.Length; row++) {
-            for (int col = 0; col < _columns; col++) {
-                Vector3 spawnPos = _startPosition + new Vector3(col * _spacingX, -row * _spacingY, 0f);
-                Instantiate(_aliens[row], spawnPos, Quaternion.identity, transform);
-            }
+        if (GameManager.Instance.IsGamePlaying()) {
+            MoveInvaders();
         }
     }
 
+    private void SpawnInvaders() {
+        for (int row = 0; row < _invaders.Length; row++) {
+            for (int col = 0; col < _columns; col++) {
+                Vector3 spawnPos = _startPosition + new Vector3(col * _spacingX, -row * _spacingY, 0f);
+                Instantiate(_invaders[row], spawnPos, Quaternion.identity, transform);
+            }
+        }
+
+        _invadersSpawned = true;
+    }
+
     private void MoveInvaders() {
-        transform.position += _direction * _speed * Time.deltaTime;
+        if (!_invadersSpawned || transform.childCount == 0) return;
 
-        foreach (Transform alien in transform) {
-            if (!alien.gameObject.activeInHierarchy) continue;
-
-            if (Mathf.Abs(alien.position.x) >= _boundary) {
-                MoveDown();
-                _direction *= -1f; // Reverse direction
+        _anyAlive = false;
+        
+        // Check if any invaders are still alive
+        foreach (Transform invader in transform) {
+            if (invader.gameObject.activeInHierarchy) {
+                _anyAlive = true;
                 break;
             }
+        }
+
+        if (!_anyAlive) {
+            OnInvaderWipe?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
+        bool hitBoundary = false;
+
+        foreach (Transform invader in transform) {
+            if (!invader.gameObject.activeInHierarchy) continue;
+
+            float nextX = invader.position.x + (_direction.x * _speed * Time.deltaTime);
+            if (Mathf.Abs(nextX) >= _boundary) {
+                hitBoundary = true;
+                break;
+            }
+        }
+
+        if (hitBoundary) {
+            MoveDown();
+            _direction = -_direction;
+        } else {
+            transform.position += _direction * _speed * Time.deltaTime;
         }
     }
 

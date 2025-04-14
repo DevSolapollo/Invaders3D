@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
         Waiting,
         Countdown,
         Playing,
-        GameOver
+        GameOver,
+        Victory
     }
 
     private State _state;
@@ -37,29 +38,17 @@ public class GameManager : MonoBehaviour
         _state = State.Waiting;
     }
 
-
     private void Start() {
         GameEvents.OnGameOver += GameEvents_GameOver;
         GameInput.Instance.OnShoot += GameInput_OnShoot;
+        Invaders.Instance.OnInvaderWipe += Invaders_OnInvaderWipe;
     }
 
     private void OnDestroy() {
         GameEvents.OnGameOver -= GameEvents_GameOver;
     }
 
-    private void GameInput_OnShoot(object sender, EventArgs e) {
-        if (_state == State.Waiting) {
-            _state = State.Countdown;
-            OnStateChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-
-    private void GameEvents_GameOver() {
-        _state = State.GameOver;
-    }
-
     private void Update() {
-        Debug.Log(_state);
         switch (_state) {
             case State.Waiting:
                 break;
@@ -71,7 +60,26 @@ public class GameManager : MonoBehaviour
                 break;
             case State.GameOver:
                 break;
+            case State.Victory:
+                break;
         }
+    }
+
+    private void GameInput_OnShoot(object sender, EventArgs e) {
+        if (_state == State.Waiting) {
+            _state = State.Countdown;
+            OnStateChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void GameEvents_GameOver() {
+        _state = State.GameOver;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Invaders_OnInvaderWipe(object sender, EventArgs e) {
+        _state = State.Victory;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void Countdown() {
@@ -107,6 +115,9 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameOver() {
         return _state == State.GameOver;
+    }
+    public bool IsVictory() {
+        return _state == State.Victory;
     }
 
 }

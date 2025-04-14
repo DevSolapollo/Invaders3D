@@ -8,6 +8,7 @@ public class Turret : MonoBehaviour
     [SerializeField] private Transform _rocketPosition;
     [SerializeField] private GameObject _rocketPrefab;
     [SerializeField] private GameInput _gameInput;
+    [SerializeField] private AudioClip _shootSound;
     [SerializeField] private float _rocketSpeed;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _boundary;
@@ -42,6 +43,7 @@ public class Turret : MonoBehaviour
             return;
 
         GameObject rocket = Instantiate(_rocketPrefab, _rocketPosition.position, Quaternion.identity);
+        AudioManager.Instance.PlaySFX(_shootSound);
 
         Rigidbody rb = rocket.GetComponent<Rigidbody>();
         if (rb != null)
