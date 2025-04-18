@@ -41,4 +41,6 @@ public class AudioManager : MonoBehaviour
         _bgmSource.Stop();
     }
 
+    public bool IsMusicPlaying() => _bgmSource.isPlaying;
+
 }

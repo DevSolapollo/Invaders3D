@@ -5,7 +5,6 @@ public class Invaders : MonoBehaviour
 {
 
 
-    [SerializeField] private GameObject[] _invaders;
     [SerializeField] private int _columns = 10;
     [SerializeField] private float _spacingX = 10f;     
     [SerializeField] private float _spacingY = 4f;
@@ -30,27 +29,17 @@ public class Invaders : MonoBehaviour
         Instance = this;
     }
 
-    private void Start() {
-        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
-    }
-
-    private void GameManager_OnStateChanged(object sender, EventArgs e) {
-        if (GameManager.Instance.IsGamePlaying()) {
-            SpawnInvaders();
-        }
-    }
-
     private void Update() {
         if (GameManager.Instance.IsGamePlaying()) {
             MoveInvaders();
         }
     }
 
-    private void SpawnInvaders() {
-        for (int row = 0; row < _invaders.Length; row++) {
+    public void SpawnInvaders(GameObject[] invaders) {
+        for (int row = 0; row < invaders.Length; row++) {
             for (int col = 0; col < _columns; col++) {
                 Vector3 spawnPos = _startPosition + new Vector3(col * _spacingX, -row * _spacingY, 0f);
-                Instantiate(_invaders[row], spawnPos, Quaternion.identity, transform);
+                Instantiate(invaders[row], spawnPos, Quaternion.identity, transform);
             }
         }
 

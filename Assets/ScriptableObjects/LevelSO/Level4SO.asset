@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1415fbc54fece643b9ca33cd4e6206e, type: 3}
+  m_Name: Level4SO
+  m_EditorClassIdentifier: 
+  InvaderRows:
+  - {fileID: 802470253471534486, guid: f5abac634686a204f894f238b777e960, type: 3}
+  - {fileID: 802470253471534486, guid: f5abac634686a204f894f238b777e960, type: 3}
+  - {fileID: 4985210561022980050, guid: b1d37e453799ecb498d05ac54335f4bc, type: 3}
+  - {fileID: 4985210561022980050, guid: b1d37e453799ecb498d05ac54335f4bc, type: 3}

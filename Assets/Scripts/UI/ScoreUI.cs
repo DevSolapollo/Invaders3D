@@ -22,7 +22,8 @@ public class ScoreUI : MonoBehaviour {
     private void GameManager_OnStateChanged(object sender, EventArgs e) {
         if (GameManager.Instance.IsCountdownActive()) {
             Show();
-        } else if (GameManager.Instance.IsVictory()) {
+        } else if (GameManager.Instance.IsVictory() || GameManager.Instance.IsWaveComplete()) {
+            _score.text = "0";
             Hide();
         }
         

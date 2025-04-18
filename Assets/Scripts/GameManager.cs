@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
         Waiting,
         Countdown,
         Playing,
+        WaveOver,
         GameOver,
         Victory
     }
@@ -63,6 +64,8 @@ public class GameManager : MonoBehaviour
             case State.Playing:
                 Gameplay();
                 break;
+            case State.WaveOver:
+                break;
             case State.GameOver:
                 break;
             case State.Victory:
@@ -84,7 +87,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void Invaders_OnInvaderWipe(object sender, EventArgs e) {
-        _state = State.Victory;
+        if (LevelManager.Instance.HasNextLevel()) {
+            _state = State.WaveOver;
+        } else {
+            _state = State.Victory;
+        }
         OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -93,6 +100,7 @@ public class GameManager : MonoBehaviour
         if (_countdownToStartTimer < 0f) {
             _state = State.Playing;
             _gamePlayingTimer = _gamePlayingTimerMax;
+            LevelManager.Instance.LoadCurrentLevel();
             OnStateChanged?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -106,24 +114,35 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public float GetCountdownToStartTimer() {
-        return _countdownToStartTimer;
+    public void ContinueWave() {
+        _countdownToStartTimer = 3f;
+        _state = State.Countdown;
+
+        if (!AudioManager.Instance.IsMusicPlaying()) {
+            AudioManager.Instance.PlayMusic(_gameMusic);
+        }
+
+        ScoreManager.Instance.ResetScore();
+        LevelManager.Instance.LoadNextLevel();
+
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
-
-    public bool IsGamePlaying() {
-        return _state == State.Playing;
+    public void TriggerVictory() {
+        _state = State.Victory;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public bool IsCountdownActive() {
-        return _state == State.Countdown;
-    }
+    public float GetCountdownToStartTimer() => _countdownToStartTimer;
 
-    public bool IsGameOver() {
-        return _state == State.GameOver;
-    }
-    public bool IsVictory() {
-        return _state == State.Victory;
-    }
+    public bool IsGamePlaying() => _state == State.Playing;
 
+    public bool IsCountdownActive() => _state == State.Countdown;
+
+    public bool IsWaveComplete() => _state == State.WaveOver;
+
+    public bool IsGameOver() => _state == State.GameOver;
+
+    public bool IsVictory() => _state == State.Victory;
+    
 }
