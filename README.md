@@ -1,5 +1,7 @@
 # Space Invaders 3D
 
+[Download Latest Build](https://github.com/DevSolapollo/Invaders3D/releases/latest)
+
 A modern 3D reimagining of the classic *Space Invaders* arcade game, built in **Unity** with a clean, responsive gameplay loop. This version keeps the gameplay intact while changing the visuals.
 
 This project was made in my free time to learn Unity and C#, built upon the foundational skills I learned by following **CodeMonkey's** amazing Unity tutorials on YouTube.
